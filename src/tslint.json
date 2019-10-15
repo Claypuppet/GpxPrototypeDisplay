@@ -1,0 +1,19 @@
+{
+  "extends": "../tslint.json",
+  "rules": {
+    "no-any": true,
+    "no-unsafe-any": true,
+    "no-unsafe-finally": true,
+    "component-selector": [
+      true,
+      "element",
+      [
+        ""
+      ],
+      [
+        "kebab-case",
+        "camelCase"
+      ]
+    ]
+  }
+}
