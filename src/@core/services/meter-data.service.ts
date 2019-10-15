@@ -6,16 +6,20 @@ import {environment} from '../../environments/environment';
 import {EalyzeMeasurement, MData, MeterMeasurement, SolarEdgeMeasurement} from './socket-interfaces';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-export interface CollectedData {
+export class CollectedData {
   lommerd: {
-    meter: MeterMeasurement;
-    ealyze: EalyzeMeasurement;
-    solaredge: SolarEdgeMeasurement;
+    meter?: MeterMeasurement;
+    ealyze?: EalyzeMeasurement;
+    solaredge?: SolarEdgeMeasurement;
   };
   dazo: {
-    meter: MeterMeasurement;
-    ealyze: EalyzeMeasurement;
+    meter?: MeterMeasurement;
+    ealyze?: EalyzeMeasurement;
   };
+  constructor() {
+    this.lommerd = {};
+    this.dazo = {};
+  }
 }
 
 @Injectable({
@@ -35,20 +39,24 @@ export class MeterDataService extends Socket {
 
   constructor() {
     super({url: environment.socketUrl, options: {reconnection: true, autoConnect: true, pingTimeout: 2000}});
+    this.collectedData = new CollectedData();
     this.bindObservables();
     this.setEventListeners();
   }
 
   private bindObservables() {
-    this.updatedMeterMeasurement = super.fromEvent<MData<MeterMeasurement>>('room:update');
-    this.updatedSolarEdgeMeasurement = super.fromEvent<MData<SolarEdgeMeasurement>>('room:new');
-    this.updatedEalyzeMeasurement = super.fromEvent<MData<EalyzeMeasurement>>('room:delete');
+    this.updatedMeterMeasurement = super.fromEvent<MData<MeterMeasurement>>('measurement:meter');
+    this.updatedSolarEdgeMeasurement = super.fromEvent<MData<SolarEdgeMeasurement>>('measurement:solaredge');
+    this.updatedEalyzeMeasurement = super.fromEvent<MData<EalyzeMeasurement>>('measurement:ealyze');
   }
 
   private setEventListeners() {
     this.updatedMeterMeasurement.subscribe(data => {
       if (data[1]) {
         this.collectedData.lommerd.meter = data[1];
+      }
+      if (data[2]) {
+        this.collectedData.dazo.meter = data[2];
       }
       this._meterData.next(this.collectedData);
     });
