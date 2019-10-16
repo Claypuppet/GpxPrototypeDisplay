@@ -1,6 +1,4 @@
-
 export interface MeterMeasurement {
-  id: number;
   moment: Date;
   serial: string;
   consumption1: number;

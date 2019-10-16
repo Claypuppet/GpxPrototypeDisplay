@@ -3,24 +3,9 @@ import {Observable} from 'rxjs/Observable';
 import {Socket} from 'ngx-socket-io';
 
 import {environment} from '../../environments/environment';
-import {EalyzeMeasurement, MData, MeterMeasurement, SolarEdgeMeasurement} from './socket-interfaces';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
-
-export class CollectedData {
-  lommerd: {
-    meter?: MeterMeasurement;
-    ealyze?: EalyzeMeasurement;
-    solaredge?: SolarEdgeMeasurement;
-  };
-  dazo: {
-    meter?: MeterMeasurement;
-    ealyze?: EalyzeMeasurement;
-  };
-  constructor() {
-    this.lommerd = {};
-    this.dazo = {};
-  }
-}
+import {MData} from './socket-interfaces';
+import {CollectedData, EalyzeMeasurement, MeterMeasurement, SolarEdgeMeasurement} from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -52,20 +37,28 @@ export class MeterDataService extends Socket {
 
   private setEventListeners() {
     this.updatedMeterMeasurement.subscribe(data => {
-      if (data[1]) {
-        this.collectedData.lommerd.meter = data[1];
+      console.log(data);
+      if (data.lommerd) {
+        this.collectedData.lommerd.meter = data.lommerd;
       }
-      if (data[2]) {
-        this.collectedData.dazo.meter = data[2];
+      else if (data.dazo) {
+        this.collectedData.dazo.meter = data.dazo;
       }
       this._meterData.next(this.collectedData);
     });
     this.updatedSolarEdgeMeasurement.subscribe(data => {
-      // TODO: Set data
+      if (data.lommerd) {
+        this.collectedData.lommerd.solaredge = data.lommerd;
+      }
       this._meterData.next(this.collectedData);
     });
     this.updatedEalyzeMeasurement.subscribe(data => {
-      // TODO: Set data
+      if (data.lommerd) {
+        this.collectedData.lommerd.ealyze = data.lommerd;
+      }
+      else if (data.dazo) {
+        this.collectedData.dazo.ealyze = data.dazo;
+      }
       this._meterData.next(this.collectedData);
     });
   }

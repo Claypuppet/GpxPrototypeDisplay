@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 
-import {CollectedData, MeterDataService} from '@core/services/meter-data.service';
+import {MeterDataService} from '@core/services/meter-data.service';
 import {Subject} from 'rxjs/Subject';
 import {takeUntil} from 'rxjs/operators';
+import {CollectedData} from '../@core/models';
 
 @Component({
   selector: 'app',

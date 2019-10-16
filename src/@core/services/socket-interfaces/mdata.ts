@@ -1,3 +1,4 @@
 export interface MData<T> {
-  [meterId: number]: T;
+  lommerd: T;
+  dazo: T;
 }

@@ -1,15 +1,33 @@
 <div fxFlex="100" fxLayout="column" *ngIf="meterData">
-  <h2>lommerd</h2>
-  <p>
-  consumption1: {{ meterData.lommerd.meter.consumption1 }} <br>
-  consumption2: {{ meterData.lommerd.meter.consumption2 }} <br>
-  production1: {{ meterData.lommerd.meter.production1 }} <br>
-  production2: {{ meterData.lommerd.meter.production2 }} <br>
-  </p>
+    <h2>
+        full meter data
+    </h2>
+    {{ meterData | json }}
 
-  <h2>
-    full meter data
-  </h2>
-  {{ meterData | json }}
+    <div *ngIf="meterData.lommerd">
+        <h2>lommerd</h2>
+        <div *ngIf="meterData.lommerd.meter">
+            <h3>meter</h3>
+            <p>
+                consumption1: {{ meterData.lommerd.meter.consumption1 }} <br>
+                consumption2: {{ meterData.lommerd.meter.consumption2 }} <br>
+                production1: {{ meterData.lommerd.meter.production1 }} <br>
+                production2: {{ meterData.lommerd.meter.production2 }} <br>
+            </p>
+        </div>
+    </div>
+
+    <div *ngIf="meterData.dazo">
+        <h2>dazo</h2>
+        <div *ngIf="meterData.dazo.meter">
+            <h3>meter</h3>
+            <p>
+                consumption1: {{ meterData.dazo.meter.consumption1 }} <br>
+                consumption2: {{ meterData.dazo.meter.consumption2 }} <br>
+                production1: {{ meterData.dazo.meter.production1 }} <br>
+                production2: {{ meterData.dazo.meter.production2 }} <br>
+            </p>
+        </div>
+    </div>
 
 </div>
