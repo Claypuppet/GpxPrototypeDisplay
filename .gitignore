@@ -5,7 +5,6 @@
 ### Angular ###
 ## Angular ##
 # compiled output
-dist/
 tmp/
 app/**/*.js
 app/**/*.js.map
@@ -215,4 +214,3 @@ fabric.properties
 # End of https://www.gitignore.io/api/node,angular,webstorm
 
 .idea
-dist
