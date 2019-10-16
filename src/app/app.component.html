@@ -1,33 +1,271 @@
 <div fxFlex="100" fxLayout="column" *ngIf="meterData">
-    <h2>
-        full meter data
-    </h2>
-    {{ meterData | json }}
+  <h2>
+    full meter data
+  </h2>
+  {{ meterData | json }}
 
-    <div *ngIf="meterData.lommerd">
-        <h2>lommerd</h2>
-        <div *ngIf="meterData.lommerd.meter">
-            <h3>meter</h3>
-            <p>
-                consumption1: {{ meterData.lommerd.meter.consumption1 }} <br>
-                consumption2: {{ meterData.lommerd.meter.consumption2 }} <br>
-                production1: {{ meterData.lommerd.meter.production1 }} <br>
-                production2: {{ meterData.lommerd.meter.production2 }} <br>
-            </p>
+  <div>
+    <img src="assets/logo.png" alt="" width="200px">
+  </div>
+
+
+  <div fxLayoutGap="40px" fxLayout="row" fxLayout.lt-md="column" class="vertical-divider">
+    <mat-card fxFlex="50%">
+      <h2 fxLayoutAlign="center">Lommerd</h2>
+
+      <!-- lommerd production -->
+      <div fxLayout="row" fxLayoutGap="10px">
+        <div fxLayout="column" fxFlex="50%">
+          <div fxLayoutAlign="start center">
+            <img src="assets/producer-icon.png" class="producer-icon" fxFlex="40%">
+            <mat-slide-toggle (change)="togglePanel($event)" [checked]="true"></mat-slide-toggle>
+          </div>
+          <div fxLayout="row">
+            <div class="spinner-container" fxLayout="row">
+
+              <div class="rotate-spinner" style="width: 100px;">
+                <mat-progress-bar
+                  [mode]="meterData.lommerd.meter.currentProduction > 0 ? 'indeterminate' : 'determinate'"
+                  class="progress-style">
+                </mat-progress-bar>
+              </div>
+
+
+              <div fxLayout="row">
+                <p>
+                  {{ meterData.lommerd.meter.currentProduction }} kW
+                </p>
+                <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- lommerd consumption -->
+        <div fxLayout="column" fxFlex="50%">
+          <div fxLayoutAlign="end center">
+            <img src="assets/user-icon.png" class="producer-icon" fxFlex="32%">
+          </div>
+          <div fxLayout="row" fxFlex="100%" fxLayoutAlign="end">
+            <div style="margin: 40px -20px 40px -20px;" fxLayout="row">
+              <div fxLayout="row">
+                <p>
+                  {{ meterData.lommerd.meter.currentConsumption }} kW
+                </p>
+                <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
+              </div>
+              <div class="rotate-spinner-backwards" style="width: 100px;">
+                <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+                </mat-progress-bar>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" style="margin-top:-15px;">
+        <div class="" fxFlex="84%">
+          <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+          </mat-progress-bar>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card fxFlex="50%">
+      <h2 fxLayoutAlign="center">Dazo</h2>
+      <div fxLayout="row" fxLayoutGap="10px">
+
+        <!-- dazo Production -->
+        <div fxLayout="column" fxFlex="50%">
+        </div>
+
+        <!-- dazo consumption -->
+        <div fxLayout="column" fxFlex="50%">
+          <div fxLayoutAlign="end center">
+            <mat-slide-toggle (change)="toggleDazo($event)" [checked]="true"></mat-slide-toggle>
+            <img src="assets/user-icon.png" class="producer-icon" fxFlex="32%">
+          </div>
+          <div fxLayout="row" fxFlex="100%" fxLayoutAlign="end">
+            <div class="spinner-container" fxLayout="row">
+              <div fxLayout="row">
+                <p>
+                  {{ meterData.dazo.meter.currentConsumption }} kW
+                </p>
+                <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
+              </div>
+
+              <ng-container *ngIf="meterData.dazo.meter.currentConsumption >= 0; else lommerdNegativeConsumption">
+                <div class="rotate-spinner-backwards" style="width: 100px; margin-right: -40px !important;">
+                  <mat-progress-bar
+                    [mode]="meterData.dazo.meter.currentConsumption == 0 ? 'determinate': 'indeterminate'"
+                    class="progress-style">
+                  </mat-progress-bar>
+                </div>
+              </ng-container>
+              <ng-template #lommerdNegativeConsumption>
+                <div class="rotate-spinner" style="width: 100px;">
+                  <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+                  </mat-progress-bar>
+                </div>
+              </ng-template>
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:-15px;">
+        <div class="" fxFlex="48%" style="margin-right: 30px;">
+          <mat-progress-bar [mode]="meterData.dazo.meter.currentConsumption == 0 ? 'determinate': 'indeterminate'"
+            class="progress-style">
+          </mat-progress-bar>
+        </div>
+      </div>
+
+
+
+    </mat-card>
+
+  </div>
+  <div fxLayout="column" style="margin: 104px 0 100px 0">
+    <div fxLayoutGap="40px" fxLayout="row" fxLayout.lt-md="column">
+      <div fxFlex="50%" fxLayoutAlign="center center" fxLayout="row">
+
+        <ng-container *ngIf="lommerdDelta >= 0; else lommerdDeltaNegative">
+          <div class="rotate-spinner" style="width: 300px;">
+            <mat-progress-bar [mode]="currentConsumption == 0 ? 'determinate': 'indeterminate'" class="progress-style">
+            </mat-progress-bar>
+          </div>
+        </ng-container>
+        <ng-template #lommerdDeltaNegative>
+          <div class="rotate-spinner-backwards" style="width: 300px;">
+            <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+            </mat-progress-bar>
+          </div>
+        </ng-template>
+
+
+        <!-- <div class="rotate-spinner" style="width: 300px;">
+          <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+          </mat-progress-bar>
+        </div> -->
+
+        <!-- lommerd meter -->
+        <div fxLayout="row">
+          <div class="meter-container">
+            <img src="assets/meter-icon.png" alt="" width="70px" height="70px">
+          </div>
+          <div fxLayout="row" style="margin-left: -60px;">
+            <p>
+              {{lommerdDelta > 0? '+' : ''}}{{ lommerdDelta }} kW
+            </p>
+            <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
+          </div>
+
+        </div>
+      </div>
+
+      <div fxFlex="50%" fxLayoutAlign="center center" fxLayout="row">
+
+        <ng-container *ngIf="dazoDelta >= 0; else dazoDeltaNegative">
+          <div class="rotate-spinner" style="width: 300px;">
+            <mat-progress-bar [mode]="dazoDelta == 0 ? 'determinate': 'indeterminate'" class="progress-style">
+            </mat-progress-bar>
+          </div>
+        </ng-container>
+        <ng-template #dazoDeltaNegative>
+          <div class="rotate-spinner-backwards" style="width: 300px;">
+            <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+            </mat-progress-bar>
+          </div>
+        </ng-template>
+
+        <!-- <div class="rotate-spinner-backwards" style="width: 300px;">
+          <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+          </mat-progress-bar>
+        </div> -->
+
+        <!-- dazo meter -->
+        <div fxLayout="row">
+          <div class="meter-container">
+            <img src="assets/meter-icon.png" alt="" width="70px" height="70px">
+          </div>
+          <div fxLayout="row" style="margin-left: -60px;">
+            <p>
+              {{ dazoDelta }} kW
+            </p>
+            <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
+          </div>
+
+        </div>
+      </div>
+
     </div>
 
-    <div *ngIf="meterData.dazo">
-        <h2>dazo</h2>
-        <div *ngIf="meterData.dazo.meter">
-            <h3>meter</h3>
-            <p>
-                consumption1: {{ meterData.dazo.meter.consumption1 }} <br>
-                consumption2: {{ meterData.dazo.meter.consumption2 }} <br>
-                production1: {{ meterData.dazo.meter.production1 }} <br>
-                production2: {{ meterData.dazo.meter.production2 }} <br>
-            </p>
-        </div>
-    </div>
 
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <ng-container *ngIf="netwerkDelta >= 0; else netwerkNegative">
+      <mat-progress-bar [mode]="netwerkDelta == 0 ? 'determinate': 'indeterminate'" class="progress">
+      </mat-progress-bar>
+    </ng-container>
+
+
+    <ng-template #netwerkNegative>
+      <!-- <div class="rotate-spinner-negative"> -->
+      <mat-progress-bar [mode]="'indeterminate'" class="progress rotate-spinner-negative">
+      </mat-progress-bar>
+      <!-- </div> -->
+
+    </ng-template>
+
+
+    <h3 style="margin-left: 20px">Naar Netwerk</h3>
+
+  </div>
+  <div fxLayout="row" fxLayoutAlign="end">
+    <!-- <div fxFlex></div> -->
+    <mat-card fxFlex="20%">
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <span>{{netwerkDelta > 0? '+' : ''}}{{netwerkDelta}} kW</span>
+        <img src="assets/gpx-icon.png" alt="" width="40px" height="40px" style="margin: -20px 0 -20px 20px">
+      </div>
+    </mat-card>
+    <div fxFlex="10%"></div>
+
+  </div>
+
+  <div *ngIf="meterData.lommerd">
+    <h2>lommerd</h2>
+    <div *ngIf="meterData.lommerd.meter">
+      <h3>meter</h3>
+      <p>
+        consumption1: {{ meterData.lommerd.meter.consumption1 }} <br>
+        consumption2: {{ meterData.lommerd.meter.consumption2 }} <br>
+        production1: {{ meterData.lommerd.meter.production1 }} <br>
+        production2: {{ meterData.lommerd.meter.production2 }} <br>
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="meterData.dazo">
+    <h2>dazo</h2>
+    <div *ngIf="meterData.dazo.meter">
+      <h3>meter</h3>
+      <p>
+        consumption1: {{ meterData.dazo.meter.consumption1 }} <br>
+        consumption2: {{ meterData.dazo.meter.consumption2 }} <br>
+        production1: {{ meterData.dazo.meter.production1 }} <br>
+        production2: {{ meterData.dazo.meter.production2 }} <br>
+      </p>
+    </div>
+  </div>
+
+  <div>
+
+
+
+  </div>
 </div>
