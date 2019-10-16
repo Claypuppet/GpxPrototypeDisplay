@@ -203,22 +203,11 @@
 
   </div>
   <div fxLayout="row" fxLayoutAlign="center center">
-    <ng-container *ngIf="netwerkDelta >= 0; else netwerkNegative">
-      <mat-progress-bar [mode]="netwerkDelta == 0 ? 'determinate': 'indeterminate'" class="progress">
+      <mat-progress-bar [mode]="'buffer'" class="progress" style="transform: rotate(180deg)">
       </mat-progress-bar>
-    </ng-container>
 
 
-    <ng-template #netwerkNegative>
-      <!-- <div class="rotate-spinner-negative"> -->
-      <mat-progress-bar [mode]="'indeterminate'" class="progress rotate-spinner-negative">
-      </mat-progress-bar>
-      <!-- </div> -->
-
-    </ng-template>
-
-
-    <h3 style="margin-left: 20px">Naar Netwerk</h3>
+    <h3 style="margin-left: 20px">Netwerk</h3>
 
   </div>
   <div fxLayout="row" fxLayoutAlign="end">
