@@ -4,7 +4,6 @@
     <img src="assets/logo.png" alt="" width="200px">
   </div>
 
-
   <div fxLayoutGap="40px" fxLayout="row" fxLayout.lt-md="column" class="vertical-divider">
     <mat-card fxFlex="50%">
       <h2 fxLayoutAlign="center">Lommerd</h2>
@@ -21,15 +20,14 @@
 
               <div class="rotate-spinner" style="width: 100px;">
                 <mat-progress-bar
-                  [mode]="meterData.lommerd.meter.currentProduction > 0 ? 'indeterminate' : 'determinate'"
-                  class="progress-style">
+                    [mode]="meterData.lommerd.solaredge.currentPower > 0 ? 'indeterminate' : 'determinate'"
+                    class="progress-style">
                 </mat-progress-bar>
               </div>
 
-
               <div fxLayout="row">
                 <p>
-                  {{ meterData.lommerd.meter.currentProduction }} kW
+                  <!--                  {{ meterData.lommerd.meter.currentProduction }} kW-->
                 </p>
                 <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
               </div>
@@ -46,7 +44,7 @@
             <div style="margin: 40px -20px 40px -20px;" fxLayout="row">
               <div fxLayout="row">
                 <p>
-                  {{ meterData.lommerd.meter.currentConsumption }} kW
+                  <!--                  {{ meterData.lommerd.meter.currentConsumption }} kW-->
                 </p>
                 <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
               </div>
@@ -83,30 +81,21 @@
           </div>
           <div fxLayout="row" fxFlex="100%" fxLayoutAlign="end">
             <div class="spinner-container" fxLayout="row">
+
               <div fxLayout="row">
                 <p>
-                  {{ meterData.dazo.meter.currentConsumption }} kW
+                  <!--                  {{ meterData.dazo.meter.currentConsumption }} kW-->
                 </p>
                 <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
               </div>
 
-              <ng-container *ngIf="meterData.dazo.meter.currentConsumption >= 0; else lommerdNegativeConsumption">
-                <div class="rotate-spinner-backwards" style="width: 100px; margin-right: -40px !important;">
-                  <mat-progress-bar
+              <div [ngClass]="meterData.dazo.meter.currentConsumption > 0 ?'rotate-spinner-backwards':'rotate-spinner'"
+                   style="width: 100px; margin-right: -40px !important;">
+                <mat-progress-bar
                     [mode]="meterData.dazo.meter.currentConsumption == 0 ? 'determinate': 'indeterminate'"
                     class="progress-style">
-                  </mat-progress-bar>
-                </div>
-              </ng-container>
-              <ng-template #lommerdNegativeConsumption>
-                <div class="rotate-spinner" style="width: 100px;">
-                  <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
-                  </mat-progress-bar>
-                </div>
-              </ng-template>
-
-
-
+                </mat-progress-bar>
+              </div>
 
             </div>
           </div>
@@ -115,12 +104,10 @@
       <div fxLayout="row" fxLayoutAlign="end center" style="margin-top:-15px;">
         <div class="" fxFlex="48%" style="margin-right: 30px;">
           <mat-progress-bar [mode]="meterData.dazo.meter.currentConsumption == 0 ? 'determinate': 'indeterminate'"
-            class="progress-style">
+                            class="progress-style">
           </mat-progress-bar>
         </div>
       </div>
-
-
 
     </mat-card>
 
@@ -129,24 +116,10 @@
     <div fxLayoutGap="40px" fxLayout="row" fxLayout.lt-md="column">
       <div fxFlex="50%" fxLayoutAlign="center center" fxLayout="row">
 
-        <ng-container *ngIf="lommerdDelta >= 0; else lommerdDeltaNegative">
-          <div class="rotate-spinner" style="width: 300px;">
-            <mat-progress-bar [mode]="currentConsumption == 0 ? 'determinate': 'indeterminate'" class="progress-style">
-            </mat-progress-bar>
-          </div>
-        </ng-container>
-        <ng-template #lommerdDeltaNegative>
-          <div class="rotate-spinner-backwards" style="width: 300px;">
-            <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
-            </mat-progress-bar>
-          </div>
-        </ng-template>
-
-
-        <!-- <div class="rotate-spinner" style="width: 300px;">
-          <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+        <div [ngClass]="currentLommerdDelta > 0 ?'rotate-spinner':'rotate-spinner-backwards'" style="width: 300px;">
+          <mat-progress-bar [mode]="currentLommerdDelta == 0 ? 'determinate': 'indeterminate'" class="progress-style">
           </mat-progress-bar>
-        </div> -->
+        </div>
 
         <!-- lommerd meter -->
         <div fxLayout="row">
@@ -154,34 +127,23 @@
             <img src="assets/meter-icon.png" alt="" width="70px" height="70px">
           </div>
           <div fxLayout="row" style="margin-left: -60px;">
-            <p>
-              {{lommerdDelta > 0? '+' : ''}}{{ lommerdDelta }} kW
-            </p>
+            <span>
+              {{currentLommerdDelta > 0 ? '+' : '-'}}{{ currentLommerdDelta }} kW <br/>
+              {{totalLommerdDelta > 0 ? '+' : '-'}}{{ totalLommerdDelta }} kWh total
+            </span>
             <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
           </div>
 
         </div>
+
       </div>
 
       <div fxFlex="50%" fxLayoutAlign="center center" fxLayout="row">
 
-        <ng-container *ngIf="dazoDelta >= 0; else dazoDeltaNegative">
-          <div class="rotate-spinner" style="width: 300px;">
-            <mat-progress-bar [mode]="dazoDelta == 0 ? 'determinate': 'indeterminate'" class="progress-style">
-            </mat-progress-bar>
-          </div>
-        </ng-container>
-        <ng-template #dazoDeltaNegative>
-          <div class="rotate-spinner-backwards" style="width: 300px;">
-            <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
-            </mat-progress-bar>
-          </div>
-        </ng-template>
-
-        <!-- <div class="rotate-spinner-backwards" style="width: 300px;">
-          <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
+        <div [ngClass]="currentDazoDelta > 0 ?'rotate-spinner':'rotate-spinner-backwards'" style="width: 300px;">
+          <mat-progress-bar [mode]="currentDazoDelta == 0 ? 'determinate': 'indeterminate'" class="progress-style">
           </mat-progress-bar>
-        </div> -->
+        </div>
 
         <!-- dazo meter -->
         <div fxLayout="row">
@@ -189,32 +151,33 @@
             <img src="assets/meter-icon.png" alt="" width="70px" height="70px">
           </div>
           <div fxLayout="row" style="margin-left: -60px;">
-            <p>
-              {{ dazoDelta }} kW
-            </p>
+            <span>
+              {{ currentDazoDelta }} kW <br/>
+              {{ totalDazoDelta }} kWh total
+            </span>
             <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
           </div>
-
         </div>
+
       </div>
-
     </div>
-
 
   </div>
   <div fxLayout="row" fxLayoutAlign="center center">
-      <mat-progress-bar [mode]="'buffer'" class="progress" style="transform: rotate(180deg)">
-      </mat-progress-bar>
+    <mat-progress-bar [mode]="'buffer'" class="progress" style="transform: rotate(180deg)">
+    </mat-progress-bar>
 
-
-    <h3 style="margin-left: 20px">Netwerk</h3>
+    <h3 style="margin-left: 20px">Netstroom</h3>
 
   </div>
   <div fxLayout="row" fxLayoutAlign="end">
     <!-- <div fxFlex></div> -->
     <mat-card fxFlex="20%">
       <div fxLayout="row" fxLayoutAlign="center center">
-        <span>{{netwerkDelta > 0? '+' : ''}}{{netwerkDelta}} kW</span>
+        <span>
+          {{currentNetwerkDelta > 0 ? '+' : '-'}}{{ currentNetwerkDelta }} kW <br/>
+          {{totalNetwerkDelta > 0 ? '+' : '-'}}{{ totalNetwerkDelta }} kWh total
+        </span>
         <img src="assets/gpx-icon.png" alt="" width="40px" height="40px" style="margin: -20px 0 -20px 20px">
       </div>
     </mat-card>

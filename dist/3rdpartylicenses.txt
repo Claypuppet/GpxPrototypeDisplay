@@ -1093,8 +1093,6 @@ THE SOFTWARE.
 
 @angular/material/tooltip
 
-@angular/material/progress-bar
-
 @angular/flex-layout
 MIT
 <<<<<<< HEAD
@@ -1331,6 +1329,8 @@ THE SOFTWARE.
 MIT
 
 @angular/material/slide-toggle
+
+@angular/material/progress-bar
 
 core-js
 MIT

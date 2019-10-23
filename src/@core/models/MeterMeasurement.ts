@@ -1,10 +1,8 @@
 export interface MeterMeasurement {
   moment: Date;
   serial: string;
-  consumption1: number;
-  consumption2: number;
-  production1: number;
-  production2: number;
+  consumption: number;
+  production: number;
   currentConsumption: number;
   currentProduction: number;
 }

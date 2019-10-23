@@ -27,6 +27,34 @@ export class MeterDataService extends Socket {
     this.collectedData = new CollectedData();
     this.bindObservables();
     this.setEventListeners();
+    this.applySampleData();
+  }
+
+  private applySampleData(){
+    this.collectedData.lommerd = {
+      meter: {
+        moment: new Date(),
+        serial: '',
+        consumption: 200,
+        production: 500,
+        currentConsumption: 0,
+        currentProduction: 20,
+      },
+      solaredge: {
+        currentPower: 25
+      }
+    };
+    this.collectedData.dazo = {
+      meter: {
+        moment: new Date(),
+        serial: '',
+        consumption: 100,
+        production: 0,
+        currentConsumption: 10,
+        currentProduction: 0,
+      },
+    };
+    this._meterData.next(this.collectedData);
   }
 
   private bindObservables() {
