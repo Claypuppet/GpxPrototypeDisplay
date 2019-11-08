@@ -129,7 +129,7 @@
           <div fxLayout="row" style="margin-left: -60px;">
             <span>
               {{currentLommerdDelta > 0 ? '+' : '-'}}{{ currentLommerdDelta }} kW <br/>
-              {{totalLommerdDelta > 0 ? '+' : '-'}}{{ totalLommerdDelta }} kWh total
+              {{totalLommerdDelta > 0 ? '+' : '-'}}{{ totalLommerdDelta.toFixed(3) }} kWh total
             </span>
             <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
           </div>
@@ -153,7 +153,7 @@
           <div fxLayout="row" style="margin-left: -60px;">
             <span>
               {{ currentDazoDelta }} kW <br/>
-              {{ totalDazoDelta }} kWh total
+              {{ totalDazoDelta.toFixed(3) }} kWh total
             </span>
             <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
           </div>
@@ -176,7 +176,7 @@
       <div fxLayout="row" fxLayoutAlign="center center">
         <span>
           {{currentNetwerkDelta > 0 ? '+' : '-'}}{{ currentNetwerkDelta }} kW <br/>
-          {{totalNetwerkDelta > 0 ? '+' : '-'}}{{ totalNetwerkDelta }} kWh total
+          {{totalNetwerkDelta > 0 ? '+' : '-'}}{{ totalNetwerkDelta.toFixed(3) }} kWh total
         </span>
         <img src="assets/gpx-icon.png" alt="" width="40px" height="40px" style="margin: -20px 0 -20px 20px">
       </div>
