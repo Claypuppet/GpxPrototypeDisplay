@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.meterDataService.meterData.pipe(takeUntil(this._unsubscribeAll)).subscribe(value => {
       if (value) {
         this.meterData = value;
+        console.log(value);
       }
     });
   }
