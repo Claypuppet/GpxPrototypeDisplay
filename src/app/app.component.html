@@ -1,4 +1,4 @@
-<div fxFlex="100" fxLayout="column" *ngIf="meterData && meterData.lommerd.meter && meterData.dazo.meter">
+<div fxFlex="100" fxLayout="column" *ngIf="meterData">
 
   <div>
     <img src="assets/logo.png" alt="" width="200px">
@@ -18,7 +18,7 @@
           <div fxLayout="row">
             <div class="spinner-container" fxLayout="row">
 
-              <div class="rotate-spinner" style="width: 100px;">
+              <div *ngIf="meterData.lommerd.meter" class="rotate-spinner" style="width: 100px;">
                 <mat-progress-bar
                     [mode]="meterData.lommerd.solaredge.currentPower > 0 ? 'indeterminate' : 'determinate'"
                     class="progress-style">
@@ -48,7 +48,7 @@
                 </p>
                 <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
               </div>
-              <div class="rotate-spinner-backwards" style="width: 100px;">
+              <div *ngIf="meterData.lommerd.meter" class="rotate-spinner-backwards" style="width: 100px;">
                 <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
                 </mat-progress-bar>
               </div>
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-      <div fxLayout="row" fxLayoutAlign="center center" style="margin-top:-15px;">
+      <div *ngIf="meterData.lommerd.meter" fxLayout="row" fxLayoutAlign="center center" style="margin-top:-15px;">
         <div class="" fxFlex="84%">
           <mat-progress-bar [mode]="'indeterminate'" class="progress-style">
           </mat-progress-bar>
@@ -89,7 +89,7 @@
                 <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
               </div>
 
-              <div [ngClass]="meterData.dazo.meter.currentConsumption > 0 ?'rotate-spinner-backwards':'rotate-spinner'"
+              <div *ngIf="meterData.dazo.meter" [ngClass]="meterData.dazo.meter.currentConsumption > 0 ?'rotate-spinner-backwards':'rotate-spinner'"
                    style="width: 100px; margin-right: -40px !important;">
                 <mat-progress-bar
                     [mode]="meterData.dazo.meter.currentConsumption == 0 ? 'determinate': 'indeterminate'"
@@ -128,7 +128,7 @@
           </div>
           <div fxLayout="row" style="margin-left: -60px;">
             <span>
-              {{currentLommerdDelta > 0 ? '+' : '-'}}{{ currentLommerdDelta }} kW <br/>
+              {{currentLommerdDelta > 0 ? '+' : ''}}{{ currentLommerdDelta.toFixed(3) }} kW <br/>
               {{totalLommerdDelta > 0 ? '+' : ''}}{{ totalLommerdDelta.toFixed(3) }} kWh total
             </span>
             <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
@@ -140,7 +140,7 @@
 
       <div fxFlex="50%" fxLayoutAlign="center center" fxLayout="row">
 
-        <div [ngClass]="currentDazoDelta > 0 ?'rotate-spinner':'rotate-spinner-backwards'" style="width: 300px;">
+        <div *ngIf="meterData.dazo.meter" [ngClass]="currentDazoDelta > 0 ?'rotate-spinner':'rotate-spinner-backwards'" style="width: 300px;">
           <mat-progress-bar [mode]="currentDazoDelta == 0 ? 'determinate': 'indeterminate'" class="progress-style">
           </mat-progress-bar>
         </div>
@@ -150,9 +150,9 @@
           <div class="meter-container">
             <img src="assets/meter-icon.png" alt="" width="70px" height="70px">
           </div>
-          <div fxLayout="row" style="margin-left: -60px;">
+          <div *ngIf="meterData.dazo.meter" fxLayout="row" style="margin-left: -60px;">
             <span>
-              {{ currentDazoDelta }} kW <br/>
+              {{ currentDazoDelta.toFixed(3) }} kW <br/>
               {{ totalDazoDelta > 0 ? '+' : ''}}{{ totalDazoDelta.toFixed(3) }} kWh total
             </span>
             <img src="assets/gpx-icon.png" alt="" width="40px" height="40px">
@@ -173,10 +173,11 @@
   <div fxLayout="row" fxLayoutAlign="end">
     <!-- <div fxFlex></div> -->
     <mat-card fxFlex="25%">
-      <div fxLayout="row" fxLayoutAlign="center center">
+      <div *ngIf="meterData.dazo.meter && meterData.lommerd.meter" fxLayout="row" fxLayoutAlign="center center">
         <span>
-          {{currentNetwerkDelta > 0 ? '+' : '-'}}{{ currentNetwerkDelta.toFixed(3) }} kW <br/>
-          {{totalNetwerkDelta > 0 ? '+' : ''}}{{ totalNetwerkDelta.toFixed(3) }} kWh total
+          {{currentNetwerkDelta > 0 ? '+' : ''}}{{ currentNetwerkDelta.toFixed(3) }} kW <br/>
+          {{totalNetwerkDelta > 0 ? '+' : ''}}{{ totalNetwerkDelta.toFixed(3) }} kWh total <br/>
+          Sinds 19 november 2019
         </span>
         <img src="assets/gpx-icon.png" alt="" width="40px" height="40px" style="margin: -20px 0 -20px 20px">
       </div>
