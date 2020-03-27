@@ -1093,6 +1093,8 @@ THE SOFTWARE.
 
 @angular/material/tooltip
 
+@angular/material/progress-bar
+
 @angular/flex-layout
 MIT
 <<<<<<< HEAD
@@ -1324,8 +1326,6 @@ THE SOFTWARE.
 
 
 @angular/material/card
-
-@angular/material/progress-bar
 
 @angular/forms
 MIT
