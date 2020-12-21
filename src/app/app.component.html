@@ -186,8 +186,15 @@
     <h3 style="margin-left: 20px">Netstroom</h3>
 
   </div>
-  <div fxLayout="row" fxLayoutAlign="end">
+  <div fxLayout="row" fxLayoutAlign="space-between">
     <!-- <div fxFlex></div> -->
+    <mat-card fxFlex="33%">
+      <b>
+        Sinds 12 november 2020 verplaatst naar het nieuwe dashboard:
+        <a href="https://dashboard.gpx.nl/live/spijkergroep">De Spijkergroep!</a>
+      </b><br/>
+      <a target="_blank" href="https://mijnspijkerkwartier.nl/berichten/volgende-primeur-in-het-spijkerkwartier">Persbericht mijnspijkerkwartier.nl</a>
+    </mat-card>
     <mat-card fxFlex="25%">
       <div *ngIf="meterData.dazo.meter && meterData.lommerd.meter" fxLayout="row" fxLayoutAlign="center center">
         <span>
@@ -198,7 +205,6 @@
         <img src="assets/gpx-icon.png" alt="" width="40px" height="40px" style="margin: -20px 0 -20px 20px">
       </div>
     </mat-card>
-    <div fxFlex="10%"></div>
 
   </div>
 
